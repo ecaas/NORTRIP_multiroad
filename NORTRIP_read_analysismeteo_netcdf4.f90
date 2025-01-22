@@ -62,8 +62,10 @@
     !Loop through the number of time steps and read in data when available
     do t=1,int(n_hours_input)
         temp_date=date_to_number(start_date_input, ref_year)
+        
         call number_to_date(temp_date+(t-1)/dble(24.*timesteps_in_hour),new_start_date_input,ref_year)
-        if (new_start_date_input(minute_index) == 0) then !Only look for files at whole hours
+
+        if (new_start_date_input(minute_index) == 0 .and. t < 13) then !Only look for files at whole hours
 
             call date_to_datestr_bracket(new_start_date_input,filename_nc2_in,filename_nc2)
             call date_to_datestr_bracket(new_start_date_input,pathname_nc2_in,pathname_nc2)
