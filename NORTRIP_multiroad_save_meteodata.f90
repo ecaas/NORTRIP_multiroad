@@ -853,23 +853,25 @@ subroutine NORTRIP_multiroad_create_meteodata
                         latest_observation = meteo_obs_data(temperature_index,latest_observation_index,road_index)
                         model_at_latest_observation = var3d_nc_forecast(temperature_index_forecast,grid_index_rl_forecast(x_index_forecast,i),grid_index_rl_forecast(y_index_forecast,i),latest_model)-273.15
 
-                        if ( latest_observation .ne. missing_data ) then
+                        if ( latest_observation .ne. missing_data .and. replace_which_meteo_with_obs(temperature_index) > 0  ) then
+
                             meteo_temp(temperature_index)= relax_meteo_variable_gaussian(meteo_temp(temperature_index), model_at_latest_observation, latest_observation, t-maxval(obs_exist) ,timestep,scaling_for_relaxation)
+
                         end if 
 
                         !Longwave
                         latest_observation = meteo_obs_data(longwaveradiation_index, latest_observation_index, road_index)
                         model_at_latest_observation = var3d_nc_forecast(longwaveradiation_index_forecast,grid_index_rl_forecast(x_index_forecast,i),grid_index_rl_forecast(y_index_forecast,i),latest_model)
 
-                        if ( latest_observation .ne. missing_data ) then
+                        if ( latest_observation .ne. missing_data .and. replace_which_meteo_with_obs(longwaveradiation_index) > 0 ) then
                             meteo_temp(longwaveradiation_index)= relax_meteo_variable_gaussian(meteo_temp(longwaveradiation_index), model_at_latest_observation, latest_observation, t-maxval(obs_exist) ,timestep,scaling_for_relaxation)
                         end if
-
+                        
                         !Shortwave
                         latest_observation = meteo_obs_data(shortwaveradiation_index, latest_observation_index, road_index)
                         model_at_latest_observation = var3d_nc_forecast(shortwaveradiation_index_forecast,grid_index_rl_forecast(x_index_forecast,i),grid_index_rl_forecast(y_index_forecast,i),latest_model)
-
-                        if ( latest_observation .ne. missing_data ) then                        
+                        
+                        if ( latest_observation .ne. missing_data .and. replace_which_meteo_with_obs(shortwaveradiation_index) > 0 ) then                        
                             meteo_temp(shortwaveradiation_index)= relax_meteo_variable_gaussian(meteo_temp(shortwaveradiation_index), model_at_latest_observation, latest_observation, t-maxval(obs_exist) ,timestep,scaling_for_relaxation)
                         end if
 
@@ -880,7 +882,7 @@ subroutine NORTRIP_multiroad_create_meteodata
                         
                         model_at_latest_observation = var3d_nc_forecast(pressure_index_forecast,grid_index_rl_forecast(x_index_forecast,i),grid_index_rl_forecast(y_index_forecast,i),latest_model)/100.
                 
-                        if ( latest_observation .ne. missing_data ) then
+                        if ( latest_observation .ne. missing_data .and. replace_which_meteo_with_obs(relhumidity_index) > 0  ) then
                             meteo_temp(pressure_index)= relax_meteo_variable_gaussian(meteo_temp(pressure_index), model_at_latest_observation, latest_observation, t-maxval(obs_exist) ,timestep,scaling_for_relaxation)
                         end if
 
@@ -890,7 +892,7 @@ subroutine NORTRIP_multiroad_create_meteodata
                         
                         model_at_latest_observation = var3d_nc_forecast(dir_wind_index_forecast,grid_index_rl_forecast(x_index_forecast,i),grid_index_rl_forecast(y_index_forecast,i),latest_model)
                 
-                        if ( latest_observation .ne. missing_data ) then
+                        if ( latest_observation .ne. missing_data .and. replace_which_meteo_with_obs(dir_wind_index) > 0  ) then
                             meteo_temp(dir_wind_index)= relax_meteo_variable_gaussian(meteo_temp(dir_wind_index), model_at_latest_observation, latest_observation, t-maxval(obs_exist) ,timestep,scaling_for_relaxation)
                         end if
 
@@ -899,7 +901,7 @@ subroutine NORTRIP_multiroad_create_meteodata
                         
                         model_at_latest_observation = var3d_nc_forecast(speed_wind_index_forecast,grid_index_rl_forecast(x_index_forecast,i),grid_index_rl_forecast(y_index_forecast,i),latest_model)
                 
-                        if ( latest_observation .ne. missing_data ) then
+                        if ( latest_observation .ne. missing_data .and. replace_which_meteo_with_obs(speed_wind_index) > 0  ) then
                             meteo_temp(speed_wind_index)= relax_meteo_variable_gaussian(meteo_temp(speed_wind_index), model_at_latest_observation, latest_observation, t-maxval(obs_exist) ,timestep,scaling_for_relaxation)
                         end if
 

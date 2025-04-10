@@ -89,8 +89,7 @@
     end function relax_meteo_variable_Karisto
 ! ######################################################################	
     function relax_meteo_variable_gaussian(X_F, X_FO, X_O, t,dt,scaling_parameter)
-        !! Used to relax meteorological variables between model and observed values
-        !! Based on Crevier and Delage, 2001 and Karisto et al. 2016
+
 
         !! Input
         real, intent(in) :: X_F !! Model value
